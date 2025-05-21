@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         scaffoldBackgroundColor:AppColors.background,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.submitButton)
       ),
       home: const HomePage(),
     );
