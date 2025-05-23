@@ -1,10 +1,24 @@
+import 'package:ask_now_bot/pages/chat_page.dart';
+import 'package:ask_now_bot/services/chat_web_service.dart';
 import 'package:ask_now_bot/theme/colors.dart';
 import 'package:ask_now_bot/widgets/search_bar_button.dart';
 import 'package:flutter/material.dart';
 
-class SearchSection extends StatelessWidget{
+class SearchSection extends StatefulWidget{
   const SearchSection({super.key});
 
+  @override
+  State<SearchSection> createState() => _SearchSectionState();
+}
+
+class _SearchSectionState extends State<SearchSection> {
+  final queryController = TextEditingController();
+
+  @override
+  void dispose(){
+    super.dispose();
+    queryController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
    return Column(
@@ -24,6 +38,7 @@ class SearchSection extends StatelessWidget{
              Padding(
                padding: const EdgeInsets.all(14.0),
                child: TextField(
+                 controller: queryController,
                  style: TextStyle(color: AppColors.whiteColor),
                  decoration: InputDecoration(
                    hintText: 'Search anything...',
@@ -44,13 +59,19 @@ class SearchSection extends StatelessWidget{
                    const SizedBox(width: 10,),
                    SearchBarButton(icon: Icons.add_circle_outline, text: 'Attach',),
                    const Spacer(),
-                   Container(
-                     padding: EdgeInsets.all(9),
-                     decoration: BoxDecoration(
-                       color: AppColors.submitButton,
-                       borderRadius: BorderRadius.circular(40)
+                   GestureDetector(
+                     onTap: (){
+                       ChatWebService().chat(queryController.text.trim());
+                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatPage(question: queryController.text.trim())));
+                     },
+                     child: Container(
+                       padding: EdgeInsets.all(9),
+                       decoration: BoxDecoration(
+                         color: AppColors.submitButton,
+                         borderRadius: BorderRadius.circular(40)
+                       ),
+                       child: const Icon(Icons.arrow_forward_ios, color: AppColors.background,size: 16,),
                      ),
-                     child: const Icon(Icons.arrow_forward_ios, color: AppColors.background,size: 16,),
                    )
                  ],
                ),
@@ -61,5 +82,4 @@ class SearchSection extends StatelessWidget{
      ],
    );
   }
-
 }

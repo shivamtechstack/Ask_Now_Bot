@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor:AppColors.background,
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.submitButton)
       ),
-      home: const HomePage(),
+      home: HomePage()
     );
   }
 }
