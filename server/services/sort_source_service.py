@@ -13,11 +13,11 @@ class SortSourceService:
         for result in search_results:
             content = result.get("content")
             if not content:
-                continue  # Skip if 'content' is missing or None
+                continue
 
             res_embedding = self.embedding_model.encode(content)
 
-            similarity = np.dot(query_embedding, res_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(res_embedding))
+            similarity = float(np.dot(query_embedding, res_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(res_embedding)))
 
             result['relevance_score'] = similarity
 
